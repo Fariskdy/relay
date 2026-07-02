@@ -35,7 +35,7 @@ export default function NavRail({ currentUser, members, currentView, light, onTh
       <aside className="hidden h-screen w-[72px] shrink-0 flex-col border-r border-border-hairline bg-surface-sunken lg:flex">
         <div className="flex h-16 items-center justify-center">
           <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-surface-raised shadow-card ring-1 ring-border-hairline" aria-label="Relay">
-            <Image src="/relay-logo.png" alt="Relay" width={36} height={36} className="h-9 w-9 object-cover" priority />
+            <Image src="/relay-logo.png" alt="Relay" width={36} height={36} className="h-9 w-9 object-cover" priority unoptimized />
           </div>
         </div>
 

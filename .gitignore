@@ -49,4 +49,4 @@ tasks/*.mov
 
 # Prompt/reference scratch files not needed for the app
 relay-agent-prompt.md
-relay-logo.png
+/relay-logo.png

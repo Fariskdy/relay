@@ -13,9 +13,26 @@ export const metadata: Metadata = {
   description: "Team file-transfer dashboard",
 };
 
+const themeScript = `
+(() => {
+  try {
+    const theme = localStorage.getItem("relay:theme");
+    const light = theme !== "dark";
+    document.documentElement.classList.toggle("light", light);
+    document.documentElement.style.colorScheme = light ? "light" : "dark";
+  } catch {
+    document.documentElement.classList.add("light");
+    document.documentElement.style.colorScheme = "light";
+  }
+})();
+`;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="light" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className={`${inter.variable} font-sans antialiased`}>{children}</body>
     </html>
   );

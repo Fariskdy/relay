@@ -81,9 +81,13 @@ export default function DashboardClient({ initialView, initialSelectedId }: Dash
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(splashShellRef.current, { autoAlpha: 1, y: 0 });
       gsap.set(splashLogoRef.current, { autoAlpha: 1, scale: 1, y: 0 });
-      gsap.set(splashProgressRef.current, { scaleX: 1 });
-      const reducedMotionTimer = window.setTimeout(() => setSplashComplete(true), 900);
-      return () => window.clearTimeout(reducedMotionTimer);
+      gsap.set(splashProgressRef.current, { scaleX: 0.18, transformOrigin: "left center" });
+      const fillTimer = window.setTimeout(() => gsap.set(splashProgressRef.current, { scaleX: 1 }), 900);
+      const completeTimer = window.setTimeout(() => setSplashComplete(true), 1600);
+      return () => {
+        window.clearTimeout(fillTimer);
+        window.clearTimeout(completeTimer);
+      };
     }
 
     const ctx = gsap.context(() => {
@@ -94,12 +98,10 @@ export default function DashboardClient({ initialView, initialSelectedId }: Dash
       gsap
         .timeline({ onComplete: () => setSplashComplete(true) })
         .to(splashShellRef.current, { autoAlpha: 1, y: 0, duration: 0.18, ease: "power2.out" })
-        .to(splashLogoRef.current, { autoAlpha: 1, scale: 1, y: 0, duration: 0.52, ease: "back.out(1.35)" }, 0.06)
-        .to(splashProgressRef.current, { scaleX: 0.16, duration: 0.24, ease: "power2.out" }, 0.42)
-        .to(splashProgressRef.current, { scaleX: 0.58, duration: 0.72, ease: "power2.inOut" })
-        .to(splashProgressRef.current, { scaleX: 0.88, duration: 0.48, ease: "power2.out" })
-        .to(splashProgressRef.current, { scaleX: 1, duration: 0.34, ease: "power4.out" })
-        .to(splashShellRef.current, { autoAlpha: 0, y: -4, duration: 0.22, ease: "power2.in" }, "+=0.2");
+        .to(splashLogoRef.current, { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.25)" }, 0.06)
+        .to(splashProgressRef.current, { scaleX: 1, duration: 2.05, ease: "power2.inOut" }, 0.38)
+        .to(splashLogoRef.current, { scale: 1.035, duration: 0.22, ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.35)
+        .to(splashShellRef.current, { autoAlpha: 0, y: -4, duration: 0.24, ease: "power2.in" }, "+=0.22");
     });
 
     return () => ctx.revert();
@@ -108,6 +110,7 @@ export default function DashboardClient({ initialView, initialSelectedId }: Dash
   useEffect(() => {
     if (!storageReady) return;
     document.documentElement.classList.toggle("light", light);
+    document.documentElement.style.colorScheme = light ? "light" : "dark";
     localStorage.setItem(storageKeys.theme, light ? "light" : "dark");
   }, [light, storageReady]);
 
@@ -207,7 +210,7 @@ export default function DashboardClient({ initialView, initialSelectedId }: Dash
   const listLoading = devState === "loading";
   const showPreviewPane = currentView !== "settings" && !listLoading;
   const showMobilePreview = mobilePreview && selectedTransfer !== null;
-  const showInitialSplash = !storageReady || !splashComplete;
+  const showInitialSplash = !splashComplete;
 
   function urlWithParams(params: URLSearchParams) {
     const queryString = params.toString();
@@ -272,10 +275,10 @@ export default function DashboardClient({ initialView, initialSelectedId }: Dash
       <main key="splash" className="grid h-[100dvh] place-items-center bg-surface-base text-text-primary">
         <div ref={splashShellRef} className="flex w-full max-w-[260px] flex-col items-center px-6">
           <div ref={splashLogoRef} className="grid h-20 w-20 place-items-center overflow-hidden rounded-[18px] bg-surface-raised shadow-panel ring-1 ring-border-hairline">
-            <Image src="/relay-logo.png" alt="Relay" width={72} height={72} priority className="h-16 w-16 object-cover" />
+            <Image src="/relay-logo.png" alt="Relay" width={72} height={72} priority unoptimized className="h-16 w-16 object-cover" />
           </div>
           <div role="progressbar" aria-label="Loading Relay" className="mt-7 h-1.5 w-full overflow-hidden rounded-full bg-surface-overlay ring-1 ring-border-hairline">
-            <div ref={splashProgressRef} className="relay-progress-bar h-full w-full rounded-full bg-accent shadow-[0_0_18px_rgba(255,75,31,0.45)]" />
+            <div ref={splashProgressRef} style={{ transform: "scaleX(0)", transformOrigin: "left center" }} className="relay-progress-bar h-full w-full rounded-full bg-accent shadow-[0_0_18px_rgba(255,75,31,0.45)]" />
           </div>
         </div>
       </main>

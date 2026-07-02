@@ -120,7 +120,6 @@ export default function TransferListPane({
             <div>
               <div className="mb-3 flex items-center justify-between">
                 <h2 className="text-[11px] font-semibold uppercase tracking-wide text-text-tertiary">Workspace pulse</h2>
-                <span className="text-xs text-text-tertiary">Live mock snapshot</span>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {overviewMetrics.map((metric) => {
