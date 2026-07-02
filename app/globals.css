@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --surface-base: #18191C;
+  --surface-raised: #1F2024;
+  --surface-overlay: #28292E;
+  --surface-sunken: #131417;
+  --border-hairline: #2E2F35;
+  --text-primary: #F4F4F5;
+  --text-secondary: #9B9CA3;
+  --text-tertiary: #6B6C73;
+  --accent: #FF4B1F;
+  --accent-hover: #EA321B;
+  --accent-soft-bg: rgba(255,75,31,0.16);
+  --status-active: #2FBF71;
+  --status-expiring: #F0A93E;
+  --status-expired: #F0544C;
+  --status-disabled: #6B6C73;
+  --shadow-card: 0 4px 16px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-panel: 0 8px 32px rgba(0,0,0,0.36);
+  --avatar-1: #FF4B1F;
+  --avatar-2: #2FBF71;
+  --avatar-3: #F0A93E;
+  --avatar-4: #3AA7FF;
+  --avatar-5: #E86AA5;
+}
+
+.light {
+  --surface-base: #F6F4EF;
+  --surface-raised: #FFFFFF;
+  --surface-overlay: #EFECE5;
+  --surface-sunken: #FFFFFF;
+  --border-hairline: #E6E0D6;
+  --text-primary: #181713;
+  --text-secondary: #74706A;
+  --text-tertiary: #A19A90;
+  --accent: #FF3D24;
+  --accent-hover: #EA321B;
+  --accent-soft-bg: rgba(255,61,36,0.10);
+  --status-active: #20B978;
+  --status-expiring: #D98318;
+  --status-expired: #D93A2E;
+  --status-disabled: #8D877E;
+  --shadow-card: 0 1px 3px rgba(41,35,25,0.08), 0 1px 2px rgba(41,35,25,0.05);
+  --shadow-panel: 0 12px 34px rgba(41,35,25,0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--surface-base);
+  color: var(--text-primary);
+}
+
+body {
+  margin: 0;
+  background: var(--surface-base);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+.relay-progress-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .relay-progress-bar {
+    transform: none;
+    opacity: 0.72;
+  }
+}
